@@ -89,23 +89,53 @@ public class LinkedList<T> implements Iterable<T> {
         };
     }
 
-    public void sort(Comparator<T> comparator) {
-        if (size > 1) {
-            for (int i = 0; i < size; i++ ) {
-                Node<T> current = head;
-                Node<T> next = head.getNext();
-                for (int j = 0; j < size - 1; j++) {
-                    if (comparator.compare(current.getData(), next.getData()) > 0) {
-                        T temp = current.getData();
-                        current.setData(next.getData());
-                        next.setData(temp);
-                    }
-                    current = next;
-                    next = next.getNext();
-                }
-            }
+    private Node<T> getMiddle(Node<T> head) {
+        if (head == null) {
+            return head;
         }
+        Node<T> slow = head, fast = head;
+        while (fast.getNext() != null && fast.getNext().getNext() != null) {
+            slow = slow.getNext();
+            fast = fast.getNext().getNext();
+        }
+        return slow;
     }
+
+    private Node<T> mergeSort(Node<T> head, Comparator<T> comparator) {
+        if (head == null || head.getNext() == null) {
+            return head;
+        }
+        Node<T> middle = getMiddle(head);
+        Node<T> nextOfMiddle = middle.getNext();
+        middle.setNext(null);
+        Node<T> left = mergeSort(head, comparator);
+        Node<T> right = mergeSort(nextOfMiddle, comparator);
+        Node<T> sortedList = merge(left, right, comparator);
+        return sortedList;
+    }
+
+    private Node<T> merge(Node<T> a, Node<T> b, Comparator<T> comparator) {
+        Node<T> result = null;
+        if (a == null) {
+            return b;
+        }
+        if (b == null) {
+            return a;
+        }
+        if (comparator.compare(a.getData(), b.getData()) <= 0) {
+            result = a;
+            result.setNext(merge(a.getNext(), b, comparator));
+        } else {
+            result = b;
+            result.setNext(merge(a, b.getNext(), comparator));
+        }
+        return result;
+    }
+
+    public void sort(Comparator<T> comparator) {
+        head = mergeSort(head, comparator);
+    }
+
     public int size(){
         return size;
     }

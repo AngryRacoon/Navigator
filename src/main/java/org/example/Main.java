@@ -31,13 +31,6 @@ public class Main {
         Route route4 = new Route("4", 460, 7, true, locationPoints4);
         navigator.addRoute(route4);
 
-        LinkedList<String> locationPoints5 = new LinkedList<>();
-        locationPoints5.add("Moscow");
-        locationPoints5.add("Tambov");
-        Route route5 = new Route("5", 460, 7, true, locationPoints5);
-        navigator.addRoute(route5);
-
-
         System.out.println("Size of routes: " + navigator.size());
 
         System.out.println("Contains route1: " + navigator.contains(route1));
@@ -45,25 +38,26 @@ public class Main {
 
         navigator.removeRoute("1");
         System.out.println("Size of routes after removing route1: " + navigator.size());
-
         System.out.println("Contains route1 after removing: " + navigator.contains(route1));
+
+        navigator.addRoute(route1);
 
         navigator.chooseRoute("2");
         System.out.println("Popularity of route2 after choosing: " + route2.getPopularity());
 
         Iterable<Route> searchRoutes = navigator.searchRoutes("Moscow", "Tambov");
         for (Route route : searchRoutes) {
-            System.out.println("Search route: " + route.getID());
+            System.out.println("Search route: " + route);
         }
 
-        Iterable<Route> favoriteRoutes = navigator.getFavoriteRoutes("Point C");
+        Iterable<Route> favoriteRoutes = navigator.getFavoriteRoutes("Moscow");
         for (Route route : favoriteRoutes) {
-            System.out.println("Favorite route: " + route.getID());
+            System.out.println("Favorite route: " + route);
         }
 
         Iterable<Route> topRoutes = navigator.getTop3Routes();
         for (Route route : topRoutes) {
-            System.out.println("Top route: " + route.getID());
+            System.out.println("Top route: " + route);
         }
     }
 }

@@ -12,10 +12,8 @@ public class NavigatorImpl implements Navigator {
     }
     @Override
     public void addRoute(Route route) {
-        for (Route r: routes) {
-            if (r.equals(route)) {
-                return;
-            }
+        if (this.contains(route)){
+            return;
         }
         routes.add(route);
     }
@@ -150,7 +148,7 @@ public class NavigatorImpl implements Navigator {
 
         LinkedList<Route> result = new LinkedList<>();
         Iterator<Route> iterator = topRoutes.iterator();
-        for (int i = 0; i < 5 && iterator.hasNext(); i++) {
+        for (int i = 0; i < 3 && iterator.hasNext(); i++) {
             result.add(iterator.next());
         }
 

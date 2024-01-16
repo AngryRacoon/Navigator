@@ -23,8 +23,8 @@ public class Route {
         if (o == null || getClass() != o.getClass()) return false;
         Route route = (Route) o;
         return Double.compare(route.distance, distance) == 0 &&
-                Objects.equals(locationPoints.getFirst(), route.locationPoints.getLast()) &&
-                Objects.equals(locationPoints.getLast(), route.locationPoints.getFirst());
+                Objects.equals(locationPoints.getFirst(), route.locationPoints.getFirst()) &&
+                Objects.equals(locationPoints.getLast(), route.locationPoints.getLast());
     }
 
     @Override
@@ -70,5 +70,10 @@ public class Route {
 
     public void setLocationPoints(LinkedList<String> locationPoints) {
         this.locationPoints = locationPoints;
+    }
+
+    @Override
+    public String toString() {
+        return locationPoints.getFirst() + " - " + locationPoints.getLast() + " (" + distance + " km)";
     }
 }
